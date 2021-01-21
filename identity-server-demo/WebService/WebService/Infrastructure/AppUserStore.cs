@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -87,6 +88,23 @@ namespace WebService.Infrastructure
         public void Dispose()
         {
             // throw new NotImplementedException();
+        }
+        #endregion
+        #region IUserPasswordStore
+        public Task<bool> HasPasswordAsync(AppUser user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.PasswordHash != null);
+        }
+
+        public Task<string> GetPasswordHashAsync(AppUser user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.PasswordHash);
+        }
+
+        public Task SetPasswordHashAsync(AppUser user, string passwordHash, CancellationToken cancellationToken)
+        {
+            user.PasswordHash = passwordHash;
+            return Task.CompletedTask;
         }
         #endregion
     }
