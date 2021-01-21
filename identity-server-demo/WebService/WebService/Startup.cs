@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using WebService.Infrastructure;
 using WebService.Models;
 
 namespace WebService
@@ -21,6 +23,7 @@ namespace WebService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddIdentityCore<AppUser>(options => { });
+            services.AddScoped<IUserStore<AppUser>, AppUserStore>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // In production, the Angular files will be served from this directory
