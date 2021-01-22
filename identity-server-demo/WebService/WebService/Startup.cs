@@ -25,6 +25,7 @@ namespace WebService
             services.AddIdentityCore<AppUser>(options => { });
             services.AddScoped<IUserStore<AppUser>, AppUserStore>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddSwaggerGen();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -48,7 +49,11 @@ namespace WebService
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
-
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "User API V1");
+            });
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
